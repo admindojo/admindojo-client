@@ -6,8 +6,8 @@ admindojo client
 .. image:: https://img.shields.io/pypi/v/admindojo_client.svg
         :target: https://pypi.python.org/pypi/admindojo_client
 
-.. image:: https://img.shields.io/travis/admindojo/admindojo_client.svg
-        :target: https://travis-ci.org/admindojo/admindojo_client
+.. image:: https://img.shields.io/travis/admindojo/admindojo-client.svg
+        :target: https://travis-ci.org/admindojo/admindojo-client
 
 .. image:: https://readthedocs.org/projects/admindojo-client/badge/?version=latest
         :target: https://admindojo-client.readthedocs.io/en/latest/?badge=latest
