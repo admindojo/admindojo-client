@@ -105,7 +105,7 @@ def main():
                     pass_symbol = "\N{check mark} [pass]"
                 else:
                     pass_color = 'red'
-                    pass_symbol = "\N{BALLOT X} [fail}"
+                    pass_symbol = "\N{BALLOT X} [fail]"
                     control_has_failures = True
                 print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
 
