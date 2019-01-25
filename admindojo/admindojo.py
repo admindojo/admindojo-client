@@ -118,7 +118,7 @@ def main():
             if control_has_failures == True:
                 # print tag help
                 print('\t' + colored("This part has failures!", 'red'))
-                if str(control['tags']['duration']) != "":
+                if str(control['tags']['help']) != "":
                     print('\t\t' + 'See help: ' + str(control['tags']['help']))
             else:
                 player_result.PlayerImpact += control['impact']
