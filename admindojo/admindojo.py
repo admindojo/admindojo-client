@@ -105,10 +105,10 @@ def main():
             for code in control['results']:
                 if code['status'] == 'passed':
                     pass_color = 'green'
-                    pass_symbol = "\N{check mark} [pass]"
+                    pass_symbol = "✓ [pass]"
                 else:
                     pass_color = 'red'
-                    pass_symbol = "\N{BALLOT X} [fail]"
+                    pass_symbol = "✗ [fail]"
                     control_has_failures = True
                 print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
 
