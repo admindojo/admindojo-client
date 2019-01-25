@@ -1,0 +1,19 @@
+language: python
+python:
+- 3.6
+- 3.5
+- 3.4
+- 2.7
+install: pip install -U tox-travis
+script: tox
+deploy:
+  provider: pypi
+  server: https://test.pypi.org/legacy/
+  distributions: sdist bdist_wheel
+  user: 6uhrmittag
+  password:
+    secure: YoIO9lXAKmKbf/vUegobtAfPTssdhecJCs4mNAPm2gPC8NOq5DMRo0yVNZIyVX0j3HbY5JZB9FlQL4GB/ZdeLjND619xeLLBzi5qE4jDVyGUmzY6qp5lRYmbrmfSNflzsKRdRPZDkEgXo4+sqqRJDtqzcYLTACqHL2Mf83aTDuauaP47cJaWo/YbYXCHS2iHlchcd27ZLTy0RGmfGrE6rw1URW8ijm3KhRJGmPgU5dzZJAzQN2FXk8L5fJgI/GvDkDMXoi8Le+r/4td0bMPIy7iBoY+T6h4MtV4Pn5RaUu7pq7HQC/dpN59EJAUYvohTMo2QYlPtSSvfWxMlAFn1qMBPNLjgrk+RrBz0UQEpvnqH6vuio8VEM9Q9gJzL0z4m2SNLhpkzeRlbh1RxSvfe+74LKaNqlhZv/KPg4vyoaLUGvLOyi16WlrVqyb+8fGijD+A8wTYlOvtBdS0sSvJ1HkyjTdqpLguzLILavzRdiw/JxqnzixoWVEr59fq9dnO/01fxQpbbqNqmj5rbxjxQPRwGVUAKL2Pfmnj15qBC9Rz8nJhWTayieHBvtZA2Wbwtg69gTTGo8jmkBsfor1C7kT/60XD6Vq+XqOhQLhoYIK7KKLZP1rLn0x7TmxB6W+ZNAuQTEeksj30jvO5leBZMN8zhF1D1Aa0bNjoDmkBfdoM=
+  on:
+    tags: true
+    repo: admindojo/admindojo-client
+    python: 3.6
