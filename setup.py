@@ -11,7 +11,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=6.0', 'termcolor', ]
+requirements = ['Click>=6.0', 'termcolor', 'click-default-group']
 
 setup_requirements = ['pytest-runner', ]
 
@@ -36,20 +36,20 @@ setup(
     description="The admindojo client for VMs",
     entry_points={
         'console_scripts': [
-            'admindojo_client=admindojo_client.cli:main',
+            'admindojo=admindojo.cli:cli',
         ],
     },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='admindojo_client',
-    name='admindojo_client',
-    packages=find_packages(include=['admindojo_client']),
+    keywords='admindojo',
+    name='admindojo',
+    packages=find_packages(include=['admindojo']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/admindojo/admindojo_client',
+    url='https://github.com/admindojo/admindojo-client',
     version='0.1.4',
     zip_safe=False,
 )
