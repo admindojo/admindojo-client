@@ -94,7 +94,6 @@ def main():
     print()
     print("Result for Training: " + result_json['profiles'][0]['title'])
     print("Training id        : " + result_json['profiles'][0]['name'])
-    # todo print help url
 
     print('---------------------------------------------------------')
 
@@ -119,7 +118,8 @@ def main():
             if control_has_failures == True:
                 # print tag help
                 print('\t' + colored("This part has failures!", 'red'))
-                print('\t\t' + 'See help: url')
+                if str(control['tags']['duration']) != "":
+                    print('\t\t' + 'See help: ' + str(control['tags']['help']))
             else:
                 player_result.PlayerImpact += control['impact']
 
