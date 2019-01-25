@@ -50,6 +50,9 @@ class ResultTraining(object):
         uptime = float(tuptime.decode('utf-8').strip())
         uptime = uptime / 60
         uptime = round(uptime)
+        # subtract 5min bootup delay
+        if uptime >=10:
+            uptime -= 5
         return int(uptime)
 
     def setTimeLimit(self, time):
