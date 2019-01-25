@@ -3,8 +3,8 @@ admindojo client
 ================
 
 
-.. image:: https://img.shields.io/pypi/v/admindojo_client.svg
-        :target: https://pypi.python.org/pypi/admindojo_client
+.. image:: https://img.shields.io/pypi/v/admindojo.svg
+        :target: https://pypi.python.org/pypi/admindojo
 
 .. image:: https://img.shields.io/travis/admindojo/admindojo-client.svg
         :target: https://travis-ci.org/admindojo/admindojo-client
