@@ -3,14 +3,12 @@
 """Console script for admindojo_client."""
 import sys
 import click
-
+import admindojo_client.admindojo_client as admindojo
 
 @click.command()
 def main(args=None):
     """Console script for admindojo_client."""
-    click.echo("Replace this message by putting your code into "
-               "admindojo_client.cli.main")
-    click.echo("See click documentation at http://click.pocoo.org/")
+    admindojo.main()
     return 0
 
 

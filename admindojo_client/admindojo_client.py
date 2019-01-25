@@ -9,20 +9,36 @@ import json
 from termcolor import colored
 from subprocess import check_output
 import subprocess
+import shlex
+
 
 logger = logging.getLogger('gamifier')
 
 
 class ResultTraining(object):
-    PlayerTimeNeeded = 0
     PlayerImpact = 0.0
-
     TrainingTimeLimit = 0
     TrainingTotalImpact = 0.0
+    PlayerProductivity = 0
+    PlayerTimeNeeded = 0.0
 
-    # total percentage
-    # total score
+    def getUptime(self):
+        tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
+        uptime = float(tuptime.decode('utf-8').strip())
+        uptime = uptime/60
+        uptime = round(uptime)
+        return int(uptime)
 
+    def setTimeLimit(self, time):
+        self.TrainingTimeLimit = time
+        self.PlayerTimeNeeded = self.getUptime()
+        self.PlayerProductivity = round((time / self.PlayerTimeNeeded) * 100)
+
+    def getResult(self):
+        if (self.TrainingTotalImpact == self.PlayerImpact) and self.PlayerProductivity >= 90:
+            return True
+        else:
+            return False
 
 
 def main():
@@ -38,9 +54,11 @@ def main():
     # calc total time
     # calc total impact
     for key in datastore['profiles']:
+        timeneeded = 0
         for control in key['controls']:
-            ResultTraining.TrainingTimeLimit += int(control['tags']['duration'])
-            ResultTraining.TrainingTotalImpact += control['impact']
+            timeneeded += int(control['tags']['duration'])
+            resultTraining.TrainingTotalImpact += control['impact']
+    resultTraining.setTimeLimit(timeneeded)
 
     print()
     print("Result for Training: " + datastore['profiles'][0]['title'])
@@ -72,33 +90,25 @@ def main():
                 print('\t' + colored("This part has failures!", 'red'))
                 print('\t\t' + 'See help: url')
             else:
-                ResultTraining.PlayerImpact += control['impact']
+                resultTraining.PlayerImpact += control['impact']
 
     print('---------------------------------------------------------')
     print()
-    print('Total impact to earn: ' + str(ResultTraining.TrainingTotalImpact))
-    print('You got             : ' + str(ResultTraining.PlayerImpact))
+    print('Total impact to earn: ' + str(resultTraining.TrainingTotalImpact))
+    print('You got             : ' + str(resultTraining.PlayerImpact))
     print()
-    print('Your time limit was: ' + str(ResultTraining.TrainingTimeLimit) + ' Minutes')
-    print('You needed         :')
+    print('Your time limit was : ' + str(resultTraining.TrainingTimeLimit) + ' Minutes')
+    print('You needed          : ' + str(resultTraining.PlayerTimeNeeded) + ' Minutes')
 
-    ResultTraining.PlayerTimeNeeded = 15
+    print('Productivity        : ' + str(resultTraining.PlayerProductivity) + '%')
 
-    tpm = ResultTraining.TrainingTimeLimit / ResultTraining.PlayerTimeNeeded
-    print('TPM: ' + str(tpm))
-
-    pentalty = float(ResultTraining.TrainingTotalImpact) * 0.7
-
-    print('\t\t' + ' - Time Penalty: ' + str(pentalty))
-    result = ResultTraining.PlayerImpact - pentalty
-    print('Your result: ' + str(result))
     print()
 
-    print("db")
-
-    #output = subprocess.check_output(["echo", "Hello World!"])
-
-    print('ende')
+    if resultTraining.getResult():
+        print(colored("You finished your Task successfully!", 'green'))
+    else:
+        print(colored("You failed your Task. You need to pass all test and need a productivity of minimum 90%!", 'red'))
+    print()
 
 if __name__ == '__main__':
     main()
