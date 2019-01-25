@@ -33,7 +33,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    description="The admindojo client",
+    description="The admindojo client for VMs",
     entry_points={
         'console_scripts': [
             'admindojo_client=admindojo_client.cli:main',
