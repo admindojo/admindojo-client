@@ -1,0 +1,92 @@
+{
+  "controls": [
+    {
+      "id": "1",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "System Package apache2 should be installed"
+    },
+    {
+      "id": "1",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "Service apache2 should be installed"
+    },
+    {
+      "id": "1",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "Service apache2 should be enabled"
+    },
+    {
+      "id": "1",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "Service apache2 should be running"
+    },
+    {
+      "id": "2",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "Port 80 should be listening"
+    },
+    {
+      "id": "2",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on http://localhost status should eq 200"
+    },
+    {
+      "id": "2",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on http://localhost body should match /Hello World!/"
+    },
+    {
+      "id": "2",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on http://localhost headers.Content-Type should cmp == \"text/html\""
+    },
+    {
+      "id": "3",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "Port 443 should be listening"
+    },
+    {
+      "id": "3",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on https://localhost status should eq 200"
+    },
+    {
+      "id": "3",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on https://localhost body should match /Hello World!/"
+    },
+    {
+      "id": "3",
+      "profile_id": "ub18-apache-1",
+      "profile_sha256": "2e366c7b890581ee36a7f7707c0f0e15faf3059fb05491e10991ea023e30c22f",
+      "status": "passed",
+      "code_desc": "http GET on https://localhost headers.Content-Type should cmp == \"text/html\""
+    }
+  ],
+  "statistics": {
+    "duration": 0.355485199
+  },
+  "version": "3.2.6"
+}

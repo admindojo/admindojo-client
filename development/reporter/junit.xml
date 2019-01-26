@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='ub18-apache-1' tests='12' failed='0' failures='0'>
+    <testcase name='System Package apache2 should be installed' classname='ub18-apache-1.1' target='local://' time='0.064037229'/>
+    <testcase name='Service apache2 should be installed' classname='ub18-apache-1.1' target='local://' time='0.112841012'/>
+    <testcase name='Service apache2 should be enabled' classname='ub18-apache-1.1' target='local://' time='0.000533822'/>
+    <testcase name='Service apache2 should be running' classname='ub18-apache-1.1' target='local://' time='0.000318381'/>
+    <testcase name='Port 80 should be listening' classname='ub18-apache-1.2' target='local://' time='0.061153898'/>
+    <testcase name='http GET on http://localhost status should eq 200' classname='ub18-apache-1.2' target='local://' time='0.023466036'/>
+    <testcase name='http GET on http://localhost body should match /Hello World!/' classname='ub18-apache-1.2' target='local://' time='0.006293517'/>
+    <testcase name='http GET on http://localhost headers.Content-Type should cmp == &quot;text/html&quot;' classname='ub18-apache-1.2' target='local://' time='0.003347502'/>
+    <testcase name='Port 443 should be listening' classname='ub18-apache-1.3' target='local://' time='0.003263257'/>
+    <testcase name='http GET on https://localhost status should eq 200' classname='ub18-apache-1.3' target='local://' time='0.043088167'/>
+    <testcase name='http GET on https://localhost body should match /Hello World!/' classname='ub18-apache-1.3' target='local://' time='0.002302452'/>
+    <testcase name='http GET on https://localhost headers.Content-Type should cmp == &quot;text/html&quot;' classname='ub18-apache-1.3' target='local://' time='0.000634279'/>
+  </testsuite>
+</testsuites>
