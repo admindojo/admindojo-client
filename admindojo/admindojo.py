@@ -9,9 +9,10 @@ import subprocess
 import os
 import shutil
 
+
 class Config(object):
     path_config_client = ""
-    path_result_file   = ""
+    path_result_file = ""
 
     def getResultPath(self, path_config_client):
         config = ConfigParser()
@@ -26,6 +27,7 @@ class Config(object):
 def update():
     print("To update please....(Update not implemented yet)")
 
+
 def start():
     tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
     uptime = float(tuptime.decode('utf-8').strip())
@@ -37,7 +39,6 @@ def start():
 
 
 def check():
-
     if not os.path.isfile(os.path.normpath('/tmp/admindojo_start.txt')):
         print("Training not started. \nPlease run 'admindojo start' first")
         exit(0)
@@ -62,7 +63,6 @@ class ResultTraining(object):
     def getUptime(self):
         with open(os.path.normpath('/tmp/admindojo_start.txt'), 'r') as f:
             start = float(f.read())
-
 
         tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
         uptime = float(tuptime.decode('utf-8').strip())
@@ -163,11 +163,25 @@ def main():
                       "You need to pass all tests and need a productivity of minimum 90%!", 'red'))
     print()
 
+    path_training = os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID))
 
+    if os.path.isdir(os.path.normpath(os.path.join(path_training, player_config.path_result_file, player_result.TrainingID))):
+        overwrite = ""
+        while overwrite != "n" and overwrite != "y":
+            overwrite = input("A result already exits, do you want to overwrite it with new result?[y|n]: ")
 
-    shutil.copyfile(os.path.normpath('/tmp/result.json'), os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID) + "-report" + ".json"))
-    with open(os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID) + "-time" + ".txt"), 'w') as f:
+        if overwrite is "n":
+            print("Result not saved.")
+            exit(0)
+
+    os.makedirs(path_training, exist_ok=True)
+
+    shutil.copyfile(os.path.normpath('/tmp/result.json'), os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-report" + ".json"))
+    with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-time" + ".txt"), 'w') as f:
         f.write(str(player_result.PlayerTimeNeeded))
+
+    print("Result saved!")
+
 
 if __name__ == '__main__':
     main()
