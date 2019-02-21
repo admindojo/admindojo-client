@@ -7,7 +7,6 @@ from click_default_group import DefaultGroup
 
 import admindojo.admindojo as admindojo
 
-
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
@@ -15,9 +14,18 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 def cli():
     """
     admindojo client\n
-    run withouth options to check your training result
+    run without options to check your training result
     """
     pass
+
+
+@click.command()
+def start():
+    """
+    Start timer and begin training
+    """
+    admindojo.start()
+
 
 @click.command()
 def check():
@@ -26,12 +34,14 @@ def check():
     """
     admindojo.check()
 
+
 @click.command()
 def update():
     """
     Show update instructions
     """
     admindojo.update()
+
 
 @click.command()
 def show():
@@ -40,6 +50,8 @@ def show():
     """
     admindojo.main()
 
+
+cli.add_command(start)
 cli.add_command(check)
 cli.add_command(show)
 cli.add_command(update)

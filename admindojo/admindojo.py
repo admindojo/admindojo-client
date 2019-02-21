@@ -24,11 +24,25 @@ class Config(object):
 
 
 def update():
-    print("To update please....")
+    print("To update please....(Update not implemented yet)")
+
+def start():
+    tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
+    uptime = float(tuptime.decode('utf-8').strip())
+    with open(os.path.normpath('/tmp/admindojo_start.txt'), 'w') as f:
+        f.write(str(uptime))
+    # todo try catch
+
+    print("Time is running! Have fun.")
 
 
 def check():
-    print('Start check. This may take a while..')
+
+    if not os.path.isfile(os.path.normpath('/tmp/admindojo_start.txt')):
+        print("Training not started. \nPlease run 'admindojo start' first")
+        exit(0)
+
+    print('Start check. This may take a minute..')
     subprocess.call('inspec exec /vagrant/training/ --reporter json:/tmp/result.json', shell=True)
     print()
     print("Check done. Here are your results:")
@@ -46,13 +60,20 @@ class ResultTraining(object):
     PlayerTimeNeeded = 0.0
 
     def getUptime(self):
+        with open(os.path.normpath('/tmp/admindojo_start.txt'), 'r') as f:
+            start = float(f.read())
+
+
         tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
         uptime = float(tuptime.decode('utf-8').strip())
+
+        if uptime > start:
+            uptime -= start
+
         uptime = uptime / 60
         uptime = round(uptime)
-        # subtract 5min bootup delay
-        if uptime >=10:
-            uptime -= 5
+        if uptime < 1:
+            uptime = 1
         return int(uptime)
 
     def setTimeLimit(self, time):
@@ -142,8 +163,11 @@ def main():
                       "You need to pass all tests and need a productivity of minimum 90%!", 'red'))
     print()
 
-    shutil.copyfile(os.path.normpath('/tmp/result.json'), os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID) + ".json"))
 
+
+    shutil.copyfile(os.path.normpath('/tmp/result.json'), os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID) + "-report" + ".json"))
+    with open(os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID) + "-time" + ".txt"), 'w') as f:
+        f.write(str(player_result.PlayerTimeNeeded))
 
 if __name__ == '__main__':
     main()
