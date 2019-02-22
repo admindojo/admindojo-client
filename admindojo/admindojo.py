@@ -29,9 +29,15 @@ def update():
 
 
 def start():
+
+    if os.path.isfile(os.path.normpath('/vagrant/tmp/admindojo_start.txt')):
+        print("Looks like you already started the training and the time is already running.")
+        print("To restart please run from outside VM: 'vagrant destroy; vagrant up' and start again.")
+        exit()
+
     tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
     uptime = float(tuptime.decode('utf-8').strip())
-    with open(os.path.normpath('/tmp/admindojo_start.txt'), 'w') as f:
+    with open(os.path.normpath('/vagrant/tmp/admindojo_start.txt'), 'w') as f:
         f.write(str(uptime))
     # todo try catch
 
@@ -39,12 +45,12 @@ def start():
 
 
 def check():
-    if not os.path.isfile(os.path.normpath('/tmp/admindojo_start.txt')):
+    if not os.path.isfile(os.path.normpath('/vagrant/tmp/admindojo_start.txt')):
         print("Training not started. \nPlease run 'admindojo start' first")
         exit(0)
 
     print('Start check. This may take a minute..')
-    subprocess.call('inspec exec /vagrant/training/ --reporter json:/tmp/result.json', shell=True)
+    subprocess.call('inspec exec /vagrant/training/ --reporter json:/vagrant/tmp/result.json', shell=True)
     print()
     print("Check done. Here are your results:")
     print()
@@ -61,7 +67,7 @@ class ResultTraining(object):
     PlayerTimeNeeded = 0.0
 
     def getUptime(self):
-        with open(os.path.normpath('/tmp/admindojo_start.txt'), 'r') as f:
+        with open(os.path.normpath('/vagrant/tmp/admindojo_start.txt'), 'r') as f:
             start = float(f.read())
 
         tuptime = subprocess.check_output('tuptime -s | grep life | cut -d: -f2', shell=True)
@@ -95,7 +101,7 @@ def main():
 
     player_result = ResultTraining()
     # Read JSON data into the datastore variable
-    with open(os.path.normpath('/tmp/result.json'), 'r') as f:
+    with open(os.path.normpath('/vagrant/tmp/result.json'), 'r') as f:
         result_json = json.load(f)
         # todo try catch
 
@@ -176,7 +182,7 @@ def main():
 
     os.makedirs(path_training, exist_ok=True)
 
-    shutil.copyfile(os.path.normpath('/tmp/result.json'), os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-report" + ".json"))
+    shutil.copyfile(os.path.normpath('/vagrant/tmp/result.json'), os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-report" + ".json"))
     with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-time" + ".txt"), 'w') as f:
         f.write(str(player_result.PlayerTimeNeeded))
 
