@@ -50,6 +50,7 @@ def show():
     """
     admindojo.main()
 
+# *TODO add list tasks option
 
 cli.add_command(start)
 cli.add_command(check)
