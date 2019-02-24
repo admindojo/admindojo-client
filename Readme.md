@@ -15,7 +15,7 @@ Using local virtual machines, admindojo provides real-world scenarios in real en
 
 This repository contains the client that is used inside each training VM.
 
-Visit [admindojo.org](https://admindojo.org/docs/getting-started.html) for more information.
+Visit [admindojo.org](https://admindojo.org/getting-started) for more information.
 
 
 # Basic Usage
