@@ -138,7 +138,7 @@ def main():
                     control_has_failures = True
                 print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
 
-            print()
+            #print()
             print('\tEstimated duration: ' + str(control['tags']['duration']) + ' Minutes')
             print('\tPossible score   : ' + str(control['impact']))
 
@@ -149,6 +149,9 @@ def main():
                     print('\t\t' + 'See help: ' + str(control['tags']['help']))
             else:
                 player_result.PlayerImpact += control['impact']
+
+            print()
+
 
     print('---------------------------------------------------------')
     print()
