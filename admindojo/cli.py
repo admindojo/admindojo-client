@@ -43,18 +43,19 @@ def update():
     admindojo.update()
 
 
-@click.command()
-def show():
-    """
-    Show result
-    """
-    admindojo.main()
+# not implemented yet
+#@click.command()
+#def show():
+#    """
+#    Show result
+#    """
+#    admindojo.main()
 
 # *TODO add list tasks option
 
 cli.add_command(start)
 cli.add_command(check)
-cli.add_command(show)
+#cli.add_command(show)
 cli.add_command(update)
 
 if __name__ == "__main__":
