@@ -19,6 +19,11 @@ class Config(object):
         config.read(os.path.normpath(path_config_client))
         return config.get('inspec', 'result_path')
 
+    def getDevMode(self, path_config_client):
+        config = ConfigParser()
+        config.read(os.path.normpath(path_config_client))
+        return config.get('admindojo', 'devmode')
+
     def __init__(self, path_config_client):
         self.path_config_client = path_config_client
         self.path_result_file = self.getResultPath(path_config_client)
