@@ -35,7 +35,6 @@ def update():
 
 
 def start():
-
     if os.path.isfile(os.path.normpath('/vagrant/tmp/admindojo_start.txt')):
         print("Looks like you already started the training and the time is already running.")
         print("To restart please run from outside VM: 'vagrant destroy; vagrant up' and start again.")
@@ -117,10 +116,12 @@ def main():
     calc_time_limit = 0
     for key in result_json['profiles']:
         for control in key['controls']:
-            calc_time_limit += int(control['tags']['duration'])
+            if player_config.DevMode:
+                calc_time_limit += int(control['tags']['duration'])
             player_result.TrainingTotalImpact += control['impact']
 
-    player_result.setTimeLimit(calc_time_limit)
+    if player_config.DevMode:
+        player_result.setTimeLimit(calc_time_limit)
 
     # Print Result
 
@@ -145,7 +146,8 @@ def main():
                 print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
 
             #print()
-            print('\tEstimated duration: ' + str(control['tags']['duration']) + ' Minutes')
+            if player_config.DevMode:
+                print('\tEstimated duration: ' + str(control['tags']['duration']) + ' Minutes')
             print('\tPossible score   : ' + str(control['impact']))
 
             if control_has_failures == True:
@@ -163,19 +165,23 @@ def main():
     print()
     print('Total score to earn : ' + str(player_result.TrainingTotalImpact))
     print('You got             : ' + str(player_result.PlayerImpact))
-    print()
-    print('Your time limit was : ' + str(player_result.TrainingTimeLimit) + ' Minutes')
-    print('You needed          : ' + str(player_result.PlayerTimeNeeded) + ' Minutes')
+    if player_config.DevMode:
+        print()
+        print('Your time limit was : ' + str(player_result.TrainingTimeLimit) + ' Minutes')
+        print('You needed          : ' + str(player_result.PlayerTimeNeeded) + ' Minutes')
 
-    print('Productivity        : ' + str(player_result.PlayerProductivity) + '%')
+        print('Productivity        : ' + str(player_result.PlayerProductivity) + '%')
 
     print()
 
     if player_result.getResult():
         print(colored("You finished your training successfully!", 'green'))
     else:
-        print(colored("You failed your training! \n" +
-                      "You need to pass all tests and need a productivity of minimum 90%!", 'red'))
+        if player_config.DevMode:
+            print(colored("You failed your training! \n" +
+                          "You need to pass all tests and need a productivity of minimum 90%!", 'red'))
+        else:
+            print(colored("You failed your training! \n", 'red'))
     print()
 
     path_training = os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID))
