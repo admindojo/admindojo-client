@@ -36,7 +36,7 @@ def update():
 
 def start():
     if os.path.isfile(os.path.normpath('/vagrant/tmp/admindojo_start.txt')):
-        print("Looks like you already started the training and the time is already running.")
+        print("Looks like you already started the training and the stopwatch is already running.")
         print("To restart please run from outside VM: 'vagrant destroy; vagrant up' and start again.")
         exit()
 
@@ -46,7 +46,7 @@ def start():
         f.write(str(uptime))
     # todo try catch
 
-    print("Time is running! Have fun.")
+    print("Stopwatch is running! Have fun.")
 
 
 def check():
