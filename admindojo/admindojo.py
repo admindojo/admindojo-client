@@ -198,7 +198,7 @@ def main():
     os.makedirs(path_training, exist_ok=True)
 
     shutil.copyfile(os.path.normpath('/vagrant/tmp/result.json'), os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-report" + ".json"))
-    with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-time" + ".txt"), 'w') as f:
+    with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-timeNeeded" + ".txt"), 'w') as f:
         f.write(str(player_result.PlayerTimeNeeded))
 
     print("Result saved!")
