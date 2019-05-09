@@ -27,6 +27,7 @@ class Config(object):
     def __init__(self, path_config_client):
         self.path_config_client = path_config_client
         self.path_result_file = self.getResultPath(path_config_client)
+        self.DevMode = self.getResultPath(path_config_client)
 
 
 def update():
