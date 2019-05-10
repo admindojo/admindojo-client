@@ -50,6 +50,17 @@ def start():
     print("Stopwatch is running! Have fun.")
 
 
+def generateToken(pathToScript):
+    token = ""
+
+    if not os.path.isfile(os.path.normpath(pathToScript)):
+        print("Sorry - looks like no script to generating the token was found. Please contact us at github.com/admindojo")
+        exit()
+
+    token = subprocess.check_output(pathToScript, shell=True, universal_newlines=True)
+    return token
+
+
 def check():
     if not os.path.isfile(os.path.normpath('/vagrant/tmp/admindojo_start.txt')):
         print("Training not started. \nPlease run 'admindojo start' first")
@@ -181,10 +192,13 @@ def main():
 
         print('Productivity        : ' + str(player_result.PlayerProductivity) + '%')
 
-    print()
+    path_training = os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID))
 
     if player_result.getResult():
-        print(colored("You finished your training successfully!", 'green'))
+        print(colored("You finished the training successfully!", 'green'))
+        token = generateToken(os.path.join('/vagrant/training/', player_result.TrainingID, 'token.sh'))
+        print("The admindojo token is: " + colored(token, 'green'))
+
     else:
         if player_config.devMode:
             print(colored("Something is missing! Training not completed. \n" +
