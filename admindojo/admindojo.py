@@ -144,8 +144,6 @@ def main():
 
     # Print Result
 
-    print()
-    print("Result for Training: " + result_json['profiles'][0]['title'])
     print("Training id        : " + result_json['profiles'][0]['name'])
     print("Instructions       : " + 'https://admindojo.org/instructions/' + result_json['profiles'][0]['name'])
 
