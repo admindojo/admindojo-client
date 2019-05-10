@@ -67,7 +67,7 @@ def check():
         exit(0)
 
     print('Start check. This may take a minute..')
-    subprocess.call('inspec exec /vagrant/training/ --reporter json:/vagrant/tmp/result.json', shell=True)
+    subprocess.call('inspec exec /vagrant/training/ --reporter json:/vagrant/tmp/result.json', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     print()
     print("Check done. Here are your results:")
     print()
