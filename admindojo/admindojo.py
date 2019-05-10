@@ -147,6 +147,7 @@ def main():
     print()
     print("Result for Training: " + result_json['profiles'][0]['title'])
     print("Training id        : " + result_json['profiles'][0]['name'])
+    print("Instructions       : " + 'https://admindojo.org/instructions/' + result_json['profiles'][0]['name'])
 
     print('---------------------------------------------------------')
 
@@ -197,7 +198,7 @@ def main():
     if player_result.getResult():
         print(colored("You finished the training successfully!", 'green'))
         token = generateToken(os.path.join('/vagrant/training/', player_result.TrainingID, 'token.sh'))
-        print("The admindojo token is: " + colored(token, 'green'))
+        print("The admindojo.org token is: " + colored(token, 'green'))
 
     else:
         if player_config.devMode:
