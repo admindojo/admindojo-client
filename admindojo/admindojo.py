@@ -13,6 +13,7 @@ import shutil
 class Config(object):
     path_config_client = ""
     path_result_file = ""
+    devMode = False
 
     def getResultPath(self, path_config_client):
         config = ConfigParser()
@@ -22,12 +23,12 @@ class Config(object):
     def getDevMode(self, path_config_client):
         config = ConfigParser()
         config.read(os.path.normpath(path_config_client))
-        return config.get('admindojo', 'devmode')
+        return config.getboolean('admindojo', 'devmode')
 
     def __init__(self, path_config_client):
         self.path_config_client = path_config_client
         self.path_result_file = self.getResultPath(path_config_client)
-        self.DevMode = self.getResultPath(path_config_client)
+        self.devMode = self.getDevMode(path_config_client)
 
 
 def update():
@@ -71,6 +72,8 @@ class ResultTraining(object):
     PlayerProductivity = 0
     PlayerTimeNeeded = 0.0
 
+    devmode = False
+
     def getUptime(self):
         with open(os.path.normpath('/vagrant/tmp/admindojo_start.txt'), 'r') as f:
             start = float(f.read())
@@ -93,8 +96,11 @@ class ResultTraining(object):
         self.PlayerProductivity = round((time / self.PlayerTimeNeeded) * 100)
 
     def getResult(self):
-        if (self.TrainingTotalImpact == self.PlayerImpact) and self.PlayerProductivity >= 90:
-            return True
+        if self.TrainingTotalImpact == self.PlayerImpact:
+            if self.devmode and self.PlayerProductivity >= 90:
+                return True
+            if not self.devmode:
+                return True
         else:
             return False
 
@@ -105,6 +111,8 @@ def main():
     player_config = Config(os.path.normpath(path_config_client))
 
     player_result = ResultTraining()
+    player_result.devmode = player_config.devMode
+
     # Read JSON data into the datastore variable
     with open(os.path.normpath('/vagrant/tmp/result.json'), 'r') as f:
         result_json = json.load(f)
@@ -116,11 +124,11 @@ def main():
     calc_time_limit = 0
     for key in result_json['profiles']:
         for control in key['controls']:
-            if player_config.DevMode:
+            if player_config.devMode:
                 calc_time_limit += int(control['tags']['duration'])
             player_result.TrainingTotalImpact += control['impact']
 
-    if player_config.DevMode:
+    if player_config.devMode:
         player_result.setTimeLimit(calc_time_limit)
 
     # Print Result
@@ -146,11 +154,11 @@ def main():
                 print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
 
             #print()
-            if player_config.DevMode:
+            if player_config.devMode:
                 print('\tEstimated duration: ' + str(control['tags']['duration']) + ' Minutes')
-            print('\tPossible score   : ' + str(control['impact']))
+                print('\tPossible score   : ' + str(control['impact']))
 
-            if control_has_failures == True:
+            if control_has_failures:
                 # print tag help
                 print('\t' + colored("This part has failures!", 'red'))
                 if str(control['tags']['help']) != "":
@@ -163,9 +171,10 @@ def main():
 
     print('---------------------------------------------------------')
     print()
-    print('Total score to earn : ' + str(player_result.TrainingTotalImpact))
-    print('You got             : ' + str(player_result.PlayerImpact))
-    if player_config.DevMode:
+    if player_config.devMode:
+        print('Total score to earn : ' + str(player_result.TrainingTotalImpact))
+        print('You got             : ' + str(player_result.PlayerImpact))
+    if player_config.devMode:
         print()
         print('Your time limit was : ' + str(player_result.TrainingTimeLimit) + ' Minutes')
         print('You needed          : ' + str(player_result.PlayerTimeNeeded) + ' Minutes')
@@ -177,14 +186,12 @@ def main():
     if player_result.getResult():
         print(colored("You finished your training successfully!", 'green'))
     else:
-        if player_config.DevMode:
-            print(colored("You failed your training! \n" +
+        if player_config.devMode:
+            print(colored("Something is missing! Training not completed. \n" +
                           "You need to pass all tests and need a productivity of minimum 90%!", 'red'))
         else:
-            print(colored("You failed your training! \n", 'red'))
+            print(colored("Something is missing! Training not completed. \n", 'red'))
     print()
-
-    path_training = os.path.normpath(os.path.join(player_config.path_result_file, player_result.TrainingID))
 
     if os.path.isdir(os.path.normpath(os.path.join(path_training, player_config.path_result_file, player_result.TrainingID))):
         overwrite = ""
