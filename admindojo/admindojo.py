@@ -220,6 +220,8 @@ def main():
     shutil.copyfile(os.path.normpath('/vagrant/tmp/result.json'), os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-report" + ".json"))
     with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-timeNeeded" + ".txt"), 'w') as f:
         f.write(str(player_result.PlayerTimeNeeded))
+    with open(os.path.normpath(os.path.join(path_training, player_result.TrainingID) + "-token" + ".txt"), 'w') as f:
+        f.write(str(token))
 
     print("Result saved!")
 
