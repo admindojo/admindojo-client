@@ -131,6 +131,12 @@ def main():
 
     player_result.TrainingID = result_json['profiles'][0]['name']
 
+    # Get training type
+    try:
+        training_type = result_json['profiles'][0]['attributes'][0]['options']['value']
+    except IndexError:
+        training_type = "training"
+
     # Calc total values
     calc_time_limit = 0
     for key in result_json['profiles']:
@@ -161,7 +167,9 @@ def main():
                     pass_color = 'red'
                     pass_symbol = "✗ [fail]"
                     control_has_failures = True
-                print('\t' + colored(pass_symbol, pass_color) + " " + code['code_desc'])
+                print('\t' + colored(pass_symbol, pass_color))
+                if training_type == "training":
+                    print(" " + code['code_desc'])
 
             #print()
             if player_config.devMode:
@@ -171,7 +179,7 @@ def main():
             if control_has_failures:
                 # print tag help
                 print('\t' + colored("This part has failures!", 'red'))
-                if str(control['tags']['help']) != "":
+                if str(control['tags']['help']) != "" and training_type == "training":
                     print('\t\t' + 'See help: ' + str(control['tags']['help']))
             else:
                 player_result.PlayerImpact += control['impact']
